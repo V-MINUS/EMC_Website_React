@@ -1,0 +1,340 @@
+import React, { useEffect, useRef, memo, useCallback } from 'react';
+
+// Define types for our particles and network
+interface Particle {
+  x: number;
+  y: number;
+  directionX: number;
+  directionY: number;
+  size: number;
+  originalSize: number;
+  color: string;
+  draw: () => void;
+  update: () => void;
+}
+
+interface MousePosition {
+  x: number | null;
+  y: number | null;
+  radius: number;
+}
+
+const ParticlesBackground: React.FC = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const particlesRef = useRef<Particle[]>([]);
+  const mousePositionRef = useRef<MousePosition>({
+    x: null,
+    y: null,
+    radius: 150, // Reduced mouse interaction radius
+  });
+  const animationFrameRef = useRef<number | null>(null);
+
+  // Initialize and handle resize
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const resizeCanvas = () => {
+      if (canvas) {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        particlesRef.current = [];
+        createParticles();
+      }
+    };
+
+    const createParticles = () => {
+      if (!canvas || !ctx) return;
+
+      // Reduce particle density based on screen size and device capabilities
+      const isMobile = window.innerWidth < 768;
+      const divisor = isMobile ? 25000 : 18000; // Even fewer particles on mobile
+      const numberOfParticles = Math.floor((canvas.width * canvas.height) / divisor);
+      
+      for (let i = 0; i < numberOfParticles; i++) {
+        const size = Math.random() * 2 + 1; // Slightly smaller particles
+        const x = Math.random() * (canvas.width - size * 2);
+        const y = Math.random() * (canvas.height - size * 2);
+        const directionX = Math.random() * 0.7 - 0.35; // Reduced speed
+        const directionY = Math.random() * 0.7 - 0.35; // Reduced speed
+        const color = 'rgba(220, 220, 255, 0.8)';
+        
+        const particle: Particle = {
+          x,
+          y,
+          directionX,
+          directionY,
+          size,
+          originalSize: size,
+          color,
+          draw: function () {
+            if (!ctx) return;
+            
+            // No shadow for better performance
+            ctx.shadowBlur = 0;
+            
+            // Draw particle
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fillStyle = this.color;
+            // Only add glow to particles close to mouse for performance
+            const mousePosition = mousePositionRef.current;
+            if (mousePosition.x !== null && mousePosition.y !== null) {
+              const dx = this.x - mousePosition.x;
+              const dy = this.y - mousePosition.y;
+              const distance = Math.sqrt(dx * dx + dy * dy);
+              
+              if (distance < mousePosition.radius) {
+                ctx.shadowBlur = 4; // Reduced shadow blur
+                ctx.shadowColor = 'rgba(110, 18, 232, 0.5)';
+              }
+            }
+            ctx.fill();
+          },
+          update: function () {
+            // Boundary check
+            if (this.x > (canvas?.width || 0) || this.x < 0) {
+              this.directionX = -this.directionX;
+            }
+            if (this.y > (canvas?.height || 0) || this.y < 0) {
+              this.directionY = -this.directionY;
+            }
+            
+            // Move the particle
+            this.x += this.directionX;
+            this.y += this.directionY;
+            
+            // Mouse interaction
+            const mousePosition = mousePositionRef.current;
+            if (mousePosition.x !== null && mousePosition.y !== null) {
+              const dx = this.x - mousePosition.x;
+              const dy = this.y - mousePosition.y;
+              const distance = Math.sqrt(dx * dx + dy * dy);
+              
+              if (distance < mousePosition.radius) {
+                // Particle size grow effect on hover (less dramatic)
+                const ratio = 1 - (distance / mousePosition.radius);
+                this.size = this.originalSize + (ratio * 2);
+                
+                // Push particles away from mouse (reduced effect)
+                if (distance < 50) {
+                  const pushFactor = Math.min(5, 50 / distance);
+                  this.x += dx * 0.02 * pushFactor;
+                  this.y += dy * 0.02 * pushFactor;
+                }
+              } else {
+                // Return to original size
+                if (this.size > this.originalSize) {
+                  this.size -= 0.1;
+                }
+              }
+            } else {
+              // Return to original size
+              if (this.size > this.originalSize) {
+                this.size -= 0.1;
+              }
+            }
+            
+            // Draw the particle
+            this.draw();
+          }
+        };
+        
+        particlesRef.current.push(particle);
+      }
+    };
+
+    const connectParticles = () => {
+      if (!canvas || !ctx) return;
+      
+      // Connect fewer particles with shorter max distance for better performance
+      const maxDistance = canvas.width / 12; // Reduced connection distance
+      const particles = particlesRef.current;
+      
+      // Skip some particles for better performance
+      const connectionDensity = 2; // Only check every 2nd particle
+      
+      for (let i = 0; i < particles.length; i += connectionDensity) {
+        for (let j = i + connectionDensity; j < particles.length; j += connectionDensity) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          
+          if (distance < maxDistance) {
+            // Opacity based on distance
+            const opacity = 1 - (distance / maxDistance);
+            
+            // Simplified connection style without gradients for better performance
+            ctx.strokeStyle = `rgba(160, 140, 255, ${opacity * 0.5})`;
+            ctx.lineWidth = 0.6; // Thinner lines
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+    };
+
+    // Function to handle mousemove with throttling
+    const throttledMouseMove = (event: MouseEvent) => {
+      const rect = canvasRef.current?.getBoundingClientRect();      
+      if (rect) {
+        mousePositionRef.current = {
+          x: event.clientX - rect.left,
+          y: event.clientY - rect.top,
+          radius: mousePositionRef.current.radius
+        };
+      }
+    };
+    
+    // Initialize canvas and create particles
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+    document.addEventListener('mousemove', throttledMouseMove);
+
+    return () => {
+      window.removeEventListener('resize', resizeCanvas);
+      document.removeEventListener('mousemove', throttledMouseMove);
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+    };
+  }, []);
+
+  // Throttle animation frames for better performance
+  const draw = useCallback(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas?.getContext('2d');
+    if (!canvas || !ctx) return;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (let i = 0; i < particlesRef.current.length; i++) {
+      particlesRef.current[i].update();
+      particlesRef.current[i].draw();
+    }
+    
+    // Connect particles that are close to each other
+    const connectParticles = () => {
+      const canvas = canvasRef.current;
+      const ctx = canvas?.getContext('2d');
+      if (!canvas || !ctx) return;
+      
+      const particles = particlesRef.current;
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          
+          if (distance < 120) {
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(220, 220, 255, ${1 - distance / 120})`;
+            ctx.lineWidth = 0.5;
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+    };
+    
+    // Draw all particles and connections
+    for (let i = 0; i < particlesRef.current.length; i++) {
+      particlesRef.current[i].update();
+      particlesRef.current[i].draw();
+    }
+    
+    connectParticles();
+  }, []);
+
+  // Animation loop with FPS control
+  useEffect(() => {
+    let lastTime = 0;
+    const fps = 30; // Target 30 FPS for better performance
+    const fpsInterval = 1000 / fps;
+
+    const animate = (timeStamp: number) => {
+      animationFrameRef.current = requestAnimationFrame(animate);
+      
+      // Calculate elapsed time
+      const elapsed = timeStamp - lastTime;
+      
+      // Only render if enough time has passed
+      if (elapsed > fpsInterval) {
+        lastTime = timeStamp - (elapsed % fpsInterval);
+        draw();
+      }
+    };
+
+    animationFrameRef.current = requestAnimationFrame(animate);
+
+    return () => {
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+    };
+  }, [draw]);
+
+    // Throttle mouse move event for better performance
+    let mouseMoveTimeout: NodeJS.Timeout | null = null;
+    const handleMouseMove = (e: MouseEvent) => {
+      if (mouseMoveTimeout) return;
+      
+      mouseMoveTimeout = setTimeout(() => {
+        mousePositionRef.current.x = e.x;
+        mousePositionRef.current.y = e.y;
+        mouseMoveTimeout = null;
+      }, 16); // 60fps equivalent throttle
+    };
+    
+    const handleMouseOut = () => {
+      mousePositionRef.current.x = null;
+      mousePositionRef.current.y = null;
+    };
+
+    // Initialize
+    resizeCanvas();
+    animate(0);
+
+    // Add event listeners
+    window.addEventListener('resize', resizeCanvas);
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseout', handleMouseOut);
+
+    // Cleanup on component unmount
+    return () => {
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+      if (mouseMoveTimeout) {
+        clearTimeout(mouseMoveTimeout);
+      }
+      window.removeEventListener('resize', resizeCanvas);
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseout', handleMouseOut);
+    };
+  }, []);
+
+  return (
+    <canvas 
+      ref={canvasRef} 
+      className="particles-canvas"
+      style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        zIndex: 1,
+      }}
+    />
+  );
+};
+
+// Memoize the component to prevent unnecessary re-renders
+export default memo(ParticlesBackground);
