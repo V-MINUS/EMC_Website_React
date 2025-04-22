@@ -1,4 +1,4 @@
-﻿import React, { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 
 interface HeadingProps {
   level: 1 | 2 | 3 | 4 | 5 | 6;
@@ -11,8 +11,8 @@ export const Heading: React.FC<HeadingProps> = ({
   children, 
   className = '' 
 }) => {
-  const Tag = h as keyof JSX.IntrinsicElements;
-  return <Tag className={heading- }>{children}</Tag>;
+  const Tag = `h${level}` as keyof JSX.IntrinsicElements;
+  return <Tag className={`heading heading-${level} ${className}`}>{children}</Tag>;
 };
 
 interface TextProps {
@@ -29,7 +29,7 @@ export const Text: React.FC<TextProps> = ({
   className = '' 
 }) => {
   return (
-    <p className={	ext-  }>
+    <p className={`text text-${size} ${muted ? 'text-muted' : ''} ${className}`}>
       {children}
     </p>
   );

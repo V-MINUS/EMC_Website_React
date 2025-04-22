@@ -1,5 +1,6 @@
-﻿import React from 'react';
+import React from 'react';
 import Head from 'next/head';
+import Link from 'next/link';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import ParticlesBackground from '../components/ParticlesBackground';
@@ -13,9 +14,9 @@ const communityInitiatives = {
     location: "Cobh, Co. Cork",
     content: [
       "We are hoping that everyone is as excited for this year's Culture Night as we are.",
-      "It's a very special occasion with many communities all over the country opening their doors to the general public and showcasing their work in its most purest form.",
+      "It&apos;s a very special occasion with many communities all over the country opening their doors to the general public and showcasing their work in its most purest form.",
       "As EMC have been chosen to host one of Cork Counties flagship events, we felt obliged to go all out in true EMC fashion.",
-      "We wanted to provide an experience that showcased as much of Cobh's heritage and beauty as possible, highlighting the potential for electronic music and visual art in spaces outside the city."
+      "We wanted to provide an experience that showcased as much of Cobh&apos;s heritage and beauty as possible, highlighting the potential for electronic music and visual art in spaces outside the city."
     ],
     expandableContent: [
       "With most of our community residing in Cork City, we felt it important to make sure everyone gets to the event and home safely.",
@@ -144,7 +145,7 @@ const Community: React.FC = () => {
           <div className="section-line"></div>
           <p className="page-description">
             Discover the various community initiatives organized by the Electronic Music Council to foster growth, 
-            education, and connection within Cork's electronic music community.
+            education, and connection within Cork&apos;s electronic music community.
           </p>
         </div>
       </section>
@@ -246,11 +247,11 @@ const Community: React.FC = () => {
             <h2>Join Our Community</h2>
             <p>
               The Electronic Music Council is always looking for new members, volunteers, and collaborators
-              to help strengthen Cork's electronic music scene. 
+              to help strengthen Cork&apos;s electronic music scene. 
             </p>
             <div className="join-buttons">
-              <a href="/contact" className="btn btn-primary">Get Involved</a>
-              <a href="/events" className="btn btn-secondary">Upcoming Events</a>
+              <Link href="/contact" className="btn btn-primary">Get Involved</Link>
+              <Link href="/events" className="btn btn-secondary">Upcoming Events</Link>
             </div>
           </div>
         </div>

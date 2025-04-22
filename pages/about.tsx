@@ -1,6 +1,6 @@
-﻿import React from 'react';
+import React from 'react';
 import Head from 'next/head';
-import Link from 'next/link';
+// Removed unused Link import
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import ParticlesBackground from '../components/ParticlesBackground';
@@ -116,7 +116,7 @@ const About: React.FC = () => {
             <h2>About EMC</h2>
             <div className="section-line"></div>
           </div>
-          <p>The Electronic Music Council (EMC) was established to support and grow Cork's electronic music scene. We connect artists, venues, and audiences to create a vibrant community around electronic music.</p>
+          <p>The Electronic Music Council (EMC) was established to support and grow Cork&apos;s electronic music scene. We connect artists, venues, and audiences to create a vibrant community around electronic music.</p>
           <p>Through our events, educational programs, and community initiatives, we aim to make Cork a hub for electronic music culture in Ireland and beyond.</p>
         </div>
       </section>

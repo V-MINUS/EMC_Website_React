@@ -1,6 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
+import Image from 'next/image';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import ParticlesBackground from '../components/ParticlesBackground';
@@ -114,7 +115,7 @@ const Artists: React.FC = () => {
             {featuredArtists.map(artist => (
               <div className="artist-card" key={artist.id}>
                 <div className="artist-image">
-                  <img src={artist.image} alt={artist.name} />
+                  <Image src={artist.image} alt={artist.name} width={300} height={300} />
                 </div>
                 <div className="artist-content">
                   <h3>{artist.name}</h3>
@@ -151,7 +152,7 @@ const Artists: React.FC = () => {
             {residents.map(artist => (
               <div className="resident-card" key={artist.id}>
                 <div className="resident-image">
-                  <img src={artist.image} alt={artist.name} />
+                  <Image src={artist.image} alt={artist.name} width={300} height={300} />
                 </div>
                 <div className="resident-content">
                   <h3>{artist.name}</h3>
@@ -177,7 +178,7 @@ const Artists: React.FC = () => {
         <div className="container">
           <div className="signup-content">
             <h2>Join Our Artist Network</h2>
-            <p>Are you an electronic music producer or DJ based in Cork? We'd love to support your work and connect you with opportunities.</p>
+            <p>Are you an electronic music producer or DJ based in Cork? We&apos;d love to support your work and connect you with opportunities.</p>
             <Link href="/contact" className="btn btn-primary">Get in Touch</Link>
           </div>
         </div>

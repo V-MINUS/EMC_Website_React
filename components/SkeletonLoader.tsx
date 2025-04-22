@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 
 interface SkeletonProps {
   width?: string;
@@ -15,7 +15,7 @@ const SkeletonLoader: React.FC<SkeletonProps> = ({
 }) => {
   return (
     <div 
-      className={skeleton-loader }
+      className={`skeleton-loader ${className}`}
       style={{
         width,
         height,

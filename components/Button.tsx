@@ -1,4 +1,4 @@
-﻿import React, { ReactNode, ButtonHTMLAttributes } from 'react';
+import React, { ReactNode, ButtonHTMLAttributes } from 'react';
 import Link from 'next/link';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -17,14 +17,12 @@ const Button: React.FC<ButtonProps> = ({
   className = '',
   ...props 
 }) => {
-  const baseClass = tn btn- btn- ;
+  const baseClass = `btn btn-${variant} btn-${size} ${className}`;
   
   if (href) {
     return (
-      <Link href={href}>
-        <a className={baseClass} role="button" tabIndex={0}>
-          {children}
-        </a>
+      <Link href={href} className={baseClass} role="button" tabIndex={0}>
+        {children}
       </Link>
     );
   }
