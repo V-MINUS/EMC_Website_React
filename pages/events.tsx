@@ -1,6 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
+import Image from 'next/image';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import ParticlesBackground from '../components/ParticlesBackground';
@@ -95,7 +96,7 @@ const Events: React.FC = () => {
                   <Link href={`/events/${event.id}`} className="btn btn-tertiary">Get Tickets</Link>
                 </div>
                 <div className="event-image">
-                  <img loading="lazy" src={event.image} alt={event.title} />
+                  <Image src={event.image} alt={event.title} width={400} height={250} />
                 </div>
               </div>
             ))}
@@ -112,21 +113,21 @@ const Events: React.FC = () => {
           </div>
           <div className="gallery-grid">
             <div className="gallery-item">
-              <img src="/images/event-placeholder.jpg" alt="Past EMC Event" />
+              <Image src="/images/event-placeholder.jpg" alt="Past EMC Event" width={300} height={200} />
               <div className="gallery-overlay">
                 <h3>Winter Sound Series</h3>
                 <p>December 2024</p>
               </div>
             </div>
             <div className="gallery-item">
-              <img src="/images/event-placeholder.jpg" alt="Past EMC Event" />
+              <Image src="/images/event-placeholder.jpg" alt="Past EMC Event" width={300} height={200} />
               <div className="gallery-overlay">
                 <h3>Cork Electronic Festival</h3>
                 <p>October 2024</p>
               </div>
             </div>
             <div className="gallery-item">
-              <img src="/images/event-placeholder.jpg" alt="Past EMC Event" />
+              <Image src="/images/event-placeholder.jpg" alt="Past EMC Event" width={300} height={200} />
               <div className="gallery-overlay">
                 <h3>Summer DJ Workshop</h3>
                 <p>July 2024</p>

@@ -105,7 +105,7 @@ const Home: React.FC = () => {
       <section className="hero">
         <div className="hero-content">
           <h1 className="glitch-text" data-text="Electronic Music Council">Electronic Music Council</h1>
-          <div className="tagline">Fostering Cork's electronic music culture</div>
+          <div className="tagline">Fostering Cork&apos;s electronic music culture</div>
           <div className="hero-buttons">
             <Link href="/events" className="btn btn-primary">Upcoming Events</Link>
             <Link href="/about" className="btn btn-secondary">Our Mission</Link>

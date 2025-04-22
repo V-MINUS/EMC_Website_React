@@ -1,6 +1,5 @@
 import React from 'react';
 import Head from 'next/head';
-// Removed unused Link import
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import ParticlesBackground from '../components/ParticlesBackground';
