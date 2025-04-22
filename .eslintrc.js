@@ -9,7 +9,8 @@ module.exports = {
   plugins: ["@typescript-eslint"],
   parser: "@typescript-eslint/parser",
   rules: {
-    // Example: "react/react-in-jsx-scope": "off",
-    // Add project-specific rules here
+    "react/no-unescaped-entities": "off",
+    "@next/next/no-img-element": "off",
+    "@typescript-eslint/no-unused-vars": "warn"
   }
 };
