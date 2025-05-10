@@ -122,12 +122,12 @@ const Merch = () => {
           <div className="team-grid products-grid">
             {filteredProducts.map(product => (
               <div className="team-card product-card" key={product.id}>
-                <div className="team-card-image product-image flex justify-center">
-                  <div className="relative w-full max-w-[240px] h-[240px] overflow-hidden rounded-lg">
+                <div className="team-card-image product-image">
+                  <div className="image-container">
                     <img 
                       src={product.image} 
                       alt={product.name} 
-                      className="team-image object-cover w-full h-full"
+                      className="team-image"
                       onError={(e) => {
                         e.currentTarget.src = '/images/event-placeholder.jpg';
                       }}
