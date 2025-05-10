@@ -11,12 +11,12 @@ interface TeamCardProps {
 const TeamCard: React.FC<TeamCardProps> = ({ name, role, bio, imageSrc }) => {
   return (
     <div className="team-card">
-      <div className="team-card-image flex justify-center">
-        <div className="relative w-full max-w-[240px] h-[240px] overflow-hidden rounded-lg">
+      <div className="team-card-image">
+        <div className="image-container">
           <img 
             src={imageSrc || '/images/team-placeholder.jpg'} 
             alt={name}
-            className="team-image object-cover w-full h-full"
+            className="team-image"
             onError={(e) => {
               e.currentTarget.src = '/images/team-placeholder.jpg';
             }}

@@ -93,12 +93,10 @@ const Home: React.FC = () => {
   return (
     <>
       <Head>
-        <title>Electronic Music Council | Cork</title>
-        <meta name="description" content="A community working to generate and maintain a positive, sustainable electronic music economy in Cork." />
+        <title>Electronic Music Council | Cork's Premier Electronic Music Community</title>
+        <meta name="description" content="Electronic Music Council (EMC) is Cork's hub for electronic music culture, promoting events, education, and community." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
-        {/* Font Awesome for social icons */}
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
       </Head>
       
       {/* The particles background with z-index to appear behind content */}
