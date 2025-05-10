@@ -30,26 +30,16 @@ const teamMembers = [
   },
   {
     id: 3,
-    name: "James Walshe",
-    role: "Chairperson",
-    bio: [
-      "This is our current Chairperson James Walshe, who cut his teeth running underground parties with the Abjure collective five years ago.",
-      "As EMC chair, he's led incorporation as a limited company and secured major funding from Cork City Council and the Arts Council."
-    ],
-    imageSrc: "/images/team/James-Walshe.jpg"
-  },
-  {
-    id: 4,
-    name: "VLR",
+    name: "DEBHIAL",
     role: "Artist Member",
     bio: [
-      "VLR is a talented producer and DJ from Cork's electronic music scene, bringing fresh energy and innovative sounds to every performance.",
-      "With a unique style that blends multiple electronic genres, VLR has become an important voice in the local community."
+      "DEBHIAL is a talented producer and DJ from Cork's electronic music scene, bringing fresh energy and innovative sounds to every performance.",
+      "With a unique style that blends multiple electronic genres, DEBHIAL has become an important voice in the local community."
     ],
     imageSrc: "/images/team/VLR.jpg"
   },
   {
-    id: 5,
+    id: 4,
     name: "Miko",
     role: "Community Organizer",
     bio: [
@@ -59,7 +49,7 @@ const teamMembers = [
     imageSrc: "/images/team/miko.jpg"
   },
   {
-    id: 6,
+    id: 5,
     name: "Nat",
     role: "Events Coordinator",
     bio: [
@@ -80,66 +70,71 @@ const About: React.FC = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       
-      <ParticlesBackground />
+      {/* The particles background with z-index to appear behind content */}
+      <div className="fixed inset-0 z-particles">
+        <ParticlesBackground />
+      </div>
       
       <Header activeLink="about" />
       
-      {/* Page Header */}
-      <section className="page-header">
-        <div className="container">
-          <h1>About Us</h1>
-          <div className="section-line"></div>
-        </div>
-      </section>
-      
-      {/* Mission Section */}
-      <section className="mission">
-        <div className="container">
-          <div className="mission-content">
+      <main>
+        {/* Page Header */}
+        <section className="page-header">
+          <div className="container">
+            <h1>About Us</h1>
+            <div className="section-line"></div>
+          </div>
+        </section>
+        
+        {/* Mission Section */}
+        <section className="mission">
+          <div className="container">
+            <div className="mission-content">
+              <div className="section-header">
+                <h2>Our Mission</h2>
+                <div className="section-line"></div>
+              </div>
+              <p className="mission-text">
+                A community working to generate and maintain a positive, sustainable electronic music economy 
+                by facilitating opportunities for growth and development in Cork.
+              </p>
+            </div>
+          </div>
+        </section>
+        
+        {/* About Content */}
+        <section className="about-section">
+          <div className="container">
             <div className="section-header">
-              <h2>Our Mission</h2>
+              <h2>About EMC</h2>
               <div className="section-line"></div>
             </div>
-            <p className="mission-text">
-              A community working to generate and maintain a positive, sustainable electronic music economy 
-              by facilitating opportunities for growth and development in Cork.
-            </p>
+            <p>The Electronic Music Council (EMC) was established to support and grow Cork&apos;s electronic music scene. We connect artists, venues, and audiences to create a vibrant community around electronic music.</p>
+            <p>Through our events, educational programs, and community initiatives, we aim to make Cork a hub for electronic music culture in Ireland and beyond.</p>
           </div>
-        </div>
-      </section>
-      
-      {/* About Content */}
-      <section className="about-section">
-        <div className="container">
-          <div className="section-header">
-            <h2>About EMC</h2>
-            <div className="section-line"></div>
+        </section>
+        
+        {/* Team Section */}
+        <section className="team-section">
+          <div className="container">
+            <div className="section-header">
+              <h2>Our Team</h2>
+              <div className="section-line"></div>
+            </div>
+            <div className="team-grid grid-3">
+              {teamMembers.map((member) => (
+                <TeamCard
+                  key={member.id}
+                  name={member.name}
+                  role={member.role}
+                  bio={member.bio}
+                  imageSrc={member.imageSrc}
+                />
+              ))}
+            </div>
           </div>
-          <p>The Electronic Music Council (EMC) was established to support and grow Cork&apos;s electronic music scene. We connect artists, venues, and audiences to create a vibrant community around electronic music.</p>
-          <p>Through our events, educational programs, and community initiatives, we aim to make Cork a hub for electronic music culture in Ireland and beyond.</p>
-        </div>
-      </section>
-      
-      {/* Team Section */}
-      <section className="team-section">
-        <div className="container">
-          <div className="section-header">
-            <h2>Our Team</h2>
-            <div className="section-line"></div>
-          </div>
-          <div className="team-grid grid-3">
-            {teamMembers.map((member) => (
-              <TeamCard
-                key={member.id}
-                name={member.name}
-                role={member.role}
-                bio={member.bio}
-                imageSrc={member.imageSrc}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
+        </section>
+      </main>
       
       <Footer />
     </>

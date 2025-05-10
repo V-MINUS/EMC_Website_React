@@ -14,7 +14,7 @@ const Merch = () => {
       name: "EMC Logo T-Shirt",
       price: 25,
       description: "100% organic cotton t-shirt featuring the Electronic Music Council logo.",
-      image: "/images/event-placeholder.jpg",
+      image: "/images/merch/tshirt.jpg",
       category: "clothing"
     },
     {
@@ -22,7 +22,7 @@ const Merch = () => {
       name: "EMC Hoodie",
       price: 45,
       description: "Premium hoodie with the EMC logo on front and waveform design on back.",
-      image: "/images/event-placeholder.jpg",
+      image: "/images/merch/hoodie.jpg",
       category: "clothing"
     },
     {
@@ -30,7 +30,7 @@ const Merch = () => {
       name: "EMC Beanie",
       price: 18,
       description: "Keep your head warm with our EMC branded beanie.",
-      image: "/images/event-placeholder.jpg",
+      image: "/images/merch/beanie.jpg",
       category: "accessories"
     },
     {
@@ -38,7 +38,7 @@ const Merch = () => {
       name: "EMC Sticker Pack",
       price: 8,
       description: "Pack of 5 stickers featuring EMC logos and designs.",
-      image: "/images/event-placeholder.jpg",
+      image: "/images/merch/stickers.jpg",
       category: "accessories"
     },
     {
@@ -46,7 +46,7 @@ const Merch = () => {
       name: "High-Fidelity Earplugs",
       price: 15,
       description: "Protect your hearing at events while maintaining sound quality.",
-      image: "/images/event-placeholder.jpg",
+      image: "/images/merch/earplugs.jpg",
       category: "accessories"
     },
     {
@@ -54,7 +54,7 @@ const Merch = () => {
       name: "Cork Electronic Music Scene Poster",
       price: 20,
       description: "Limited edition art print celebrating Cork's electronic music venues.",
-      image: "/images/event-placeholder.jpg",
+      image: "/images/merch/poster.jpg",
       category: "prints"
     }
   ];
@@ -72,9 +72,14 @@ const Merch = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       
-      <ParticlesBackground />
+      {/* The particles background with z-index to appear behind content */}
+      <div className="fixed inset-0 z-particles">
+        <ParticlesBackground />
+      </div>
       
       <Header activeLink="merch" />
+      
+      <main>
       
       {/* Page Header */}
       <section className="page-header">
@@ -114,17 +119,26 @@ const Merch = () => {
             </button>
           </div>
           
-          <div className="products-grid">
+          <div className="team-grid products-grid">
             {filteredProducts.map(product => (
-              <div className="product-card" key={product.id}>
-                <div className="product-image">
-                  <img src={product.image} alt={product.name} />
+              <div className="team-card product-card" key={product.id}>
+                <div className="team-card-image product-image flex justify-center">
+                  <div className="relative w-60 h-60 overflow-hidden rounded-lg">
+                    <img 
+                      src={product.image} 
+                      alt={product.name} 
+                      className="team-image object-cover w-full h-full"
+                      onError={(e) => {
+                        e.currentTarget.src = '/images/event-placeholder.jpg';
+                      }}
+                    />
+                  </div>
                 </div>
-                <div className="product-content">
+                <div className="team-card-content product-content">
                   <h3>{product.name}</h3>
-                  <p className="product-price">€{product.price}</p>
+                  <h4 className="product-price">€{product.price}</h4>
                   <p className="product-description">{product.description}</p>
-                  <Link href={`/merch/${product.id}`} className="btn btn-tertiary">View Product</Link>
+                  <Link href={`/merch/${product.id}`} className="btn btn-tertiary mt-4 inline-block">View Product</Link>
                 </div>
               </div>
             ))}
@@ -142,6 +156,7 @@ const Merch = () => {
           </div>
         </div>
       </section>
+      </main>
       
       <Footer />
     </>

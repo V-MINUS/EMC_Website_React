@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { FaInstagram, FaFacebookF, FaTwitter, FaSoundcloud } from 'react-icons/fa';
+import { FaInstagram, FaFacebookF, FaLinkedinIn, FaSoundcloud, FaTiktok, FaYoutube } from 'react-icons/fa';
 
 const Footer: React.FC = () => {
   return (
@@ -11,27 +11,29 @@ const Footer: React.FC = () => {
             <h2>EMC</h2>
             <p>Electronic Music Council</p>
           </div>
-          <div className="footer-links">
-            <div className="footer-column">
-              <h3>Navigate</h3>
-              <ul>
-                <li><Link href="/">Home</Link></li>
-                <li><Link href="/about">About</Link></li>
-                <li><Link href="/events">Events</Link></li>
-                <li><Link href="/news">News</Link></li>
-                <li><Link href="/artists">Artists</Link></li>
-                <li><Link href="/merch">Merchandise</Link></li>
-                <li><Link href="/contact">Contact</Link></li>
-              </ul>
-            </div>
-            <div className="footer-column">
-              <h3>Connect</h3>
-              <ul className="social-links">
-                <li><a href="#" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><FaInstagram className="social-icon" /></a></li>
-                <li><a href="#" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><FaFacebookF className="social-icon" /></a></li>
-                <li><a href="#" target="_blank" rel="noopener noreferrer" aria-label="Twitter"><FaTwitter className="social-icon" /></a></li>
-                <li><a href="#" target="_blank" rel="noopener noreferrer" aria-label="SoundCloud"><FaSoundcloud className="social-icon" /></a></li>
-              </ul>
+          <div className="social-links-horizontal">
+            <div className="social-links-container justify-center">
+              <h3 className="text-xl">Follow Us</h3>
+              <div className="social-icons-row">
+                <a href="https://www.instagram.com/electronicmusiccouncil/" target="_blank" rel="noopener noreferrer" className="social-icon-btn" aria-label="Instagram">
+                  <FaInstagram size={22} />
+                </a>
+                <a href="https://www.facebook.com/electronicmusiccouncil/" target="_blank" rel="noopener noreferrer" className="social-icon-btn" aria-label="Facebook">
+                  <FaFacebookF size={22} />
+                </a>
+                <a href="https://ie.linkedin.com/company/electronic-music-council" target="_blank" rel="noopener noreferrer" className="social-icon-btn" aria-label="LinkedIn">
+                  <FaLinkedinIn size={22} />
+                </a>
+                <a href="https://www.tiktok.com/@electronicmusiccouncil" target="_blank" rel="noopener noreferrer" className="social-icon-btn" aria-label="TikTok">
+                  <FaTiktok size={22} />
+                </a>
+                <a href="https://www.youtube.com/@electronicmusiccouncil" target="_blank" rel="noopener noreferrer" className="social-icon-btn" aria-label="YouTube">
+                  <FaYoutube size={22} />
+                </a>
+                <a href="https://soundcloud.com/electronicmusiccouncil" target="_blank" rel="noopener noreferrer" className="social-icon-btn" aria-label="SoundCloud">
+                  <FaSoundcloud size={22} />
+                </a>
+              </div>
             </div>
           </div>
         </div>

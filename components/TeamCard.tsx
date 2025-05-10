@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import Image from 'next/image';
 
 interface TeamCardProps {
@@ -11,15 +11,17 @@ interface TeamCardProps {
 const TeamCard: React.FC<TeamCardProps> = ({ name, role, bio, imageSrc }) => {
   return (
     <div className="team-card">
-      <div className="team-card-image">
-        <img 
-          src={imageSrc || '/images/team-placeholder.jpg'} 
-          alt={name}
-          className="team-image"
-          onError={(e) => {
-            e.currentTarget.src = '/images/team-placeholder.jpg';
-          }}
-        />
+      <div className="team-card-image flex justify-center">
+        <div className="relative w-60 h-60 overflow-hidden rounded-lg">
+          <img 
+            src={imageSrc || '/images/team-placeholder.jpg'} 
+            alt={name}
+            className="team-image object-cover w-full h-full"
+            onError={(e) => {
+              e.currentTarget.src = '/images/team-placeholder.jpg';
+            }}
+          />
+        </div>
       </div>
       <div className="team-card-content">
         <h3>{name}</h3>

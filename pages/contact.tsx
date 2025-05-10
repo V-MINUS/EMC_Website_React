@@ -3,6 +3,7 @@ import Head from 'next/head';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import ParticlesBackground from '../components/ParticlesBackground';
+import { FaInstagram, FaFacebookF, FaLinkedinIn, FaSoundcloud, FaTiktok, FaYoutube } from 'react-icons/fa';
 
 type FormData = {
   name: string;
@@ -29,21 +30,43 @@ const Contact: React.FC = () => {
     }));
   };
   
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmitMessage(null);
     
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmitMessage('Thank you for your message. We will get back to you soon!');
-      setFormData({
-        name: '',
-        email: '',
-        subject: '',
-        message: ''
+    try {
+      // Send form data to API route
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
       });
-    }, 1500);
+      
+      const data = await response.json();
+      
+      if (response.ok) {
+        // Success
+        setSubmitMessage('Thank you for your message. We will get back to you soon!');
+        setFormData({
+          name: '',
+          email: '',
+          subject: '',
+          message: ''
+        });
+      } else {
+        // API returned an error
+        setSubmitMessage(`Error: ${data.message || 'Something went wrong. Please try again later.'}`);
+      }
+    } catch (error) {
+      // Network or other error
+      console.error('Error submitting form:', error);
+      setSubmitMessage('Unable to send message. Please try again later.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -55,9 +78,14 @@ const Contact: React.FC = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       
-      <ParticlesBackground />
+      {/* The particles background with z-index to appear behind content */}
+      <div className="fixed inset-0 z-particles">
+        <ParticlesBackground />
+      </div>
       
       <Header activeLink="contact" />
+      
+      <main>
       
       {/* Page Header */}
       <section className="page-header">
@@ -90,19 +118,35 @@ const Contact: React.FC = () => {
                 <p className="contact-detail">events@emc-cork.ie</p>
               </div>
               
-              <div className="social-links">
-                <h3>Follow Us</h3>
-                <div className="social-icons">
-                  <a href="#" target="_blank" rel="noopener noreferrer" className="social-icon">Instagram</a>
-                  <a href="#" target="_blank" rel="noopener noreferrer" className="social-icon">Facebook</a>
-                  <a href="#" target="_blank" rel="noopener noreferrer" className="social-icon">Twitter</a>
-                  <a href="#" target="_blank" rel="noopener noreferrer" className="social-icon">SoundCloud</a>
+              <div className="social-links-horizontal">
+                <div className="social-links-container">
+                  <h3>Follow Us</h3>
+                  <div className="social-icons-row">
+                    <a href="https://www.instagram.com/electronicmusiccouncil/" target="_blank" rel="noopener noreferrer" className="social-icon-btn" aria-label="Instagram">
+                      <FaInstagram size={22} />
+                    </a>
+                    <a href="https://www.facebook.com/electronicmusiccouncil/" target="_blank" rel="noopener noreferrer" className="social-icon-btn" aria-label="Facebook">
+                      <FaFacebookF size={22} />
+                    </a>
+                    <a href="https://ie.linkedin.com/company/electronic-music-council" target="_blank" rel="noopener noreferrer" className="social-icon-btn" aria-label="LinkedIn">
+                      <FaLinkedinIn size={22} />
+                    </a>
+                    <a href="https://www.tiktok.com/@electronicmusiccouncil" target="_blank" rel="noopener noreferrer" className="social-icon-btn" aria-label="TikTok">
+                      <FaTiktok size={22} />
+                    </a>
+                    <a href="https://www.youtube.com/@electronicmusiccouncil" target="_blank" rel="noopener noreferrer" className="social-icon-btn" aria-label="YouTube">
+                      <FaYoutube size={22} />
+                    </a>
+                    <a href="https://soundcloud.com/electronicmusiccouncil" target="_blank" rel="noopener noreferrer" className="social-icon-btn" aria-label="SoundCloud">
+                      <FaSoundcloud size={22} />
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
             
             <div className="contact-form-container">
-              <h2>Send Us a Message</h2>
+              <h2 className="text-2xl font-bold mb-4">Send Us a Message</h2>
               {submitMessage ? (
                 <div className="submit-success">
                   <p>{submitMessage}</p>
@@ -183,6 +227,7 @@ const Contact: React.FC = () => {
           </div>
         </div>
       </section>
+      </main>
       
       <Footer />
     </>

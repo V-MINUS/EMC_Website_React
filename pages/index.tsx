@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import ParticlesBackground from '../components/ParticlesBackground';
+import { FaInstagram, FaFacebookF, FaLinkedinIn, FaSoundcloud, FaTiktok, FaYoutube } from 'react-icons/fa';
 
 // Featured event data
 const featuredEvents = [
@@ -61,9 +62,12 @@ const featuredEvents = [
 
 // Social media links
 const socialLinks = [
-  { platform: "Facebook", url: "https://www.facebook.com/electronicmusiccouncil", icon: "fab fa-facebook" },
-  { platform: "Instagram", url: "https://www.instagram.com/electronicmusiccouncil", icon: "fab fa-instagram" },
-  { platform: "LinkedIn", url: "https://ie.linkedin.com/electronicmusiccouncil", icon: "fab fa-linkedin" }
+  { platform: "Instagram", url: "https://www.instagram.com/electronicmusiccouncil/", icon: "fab fa-instagram" },
+  { platform: "Facebook", url: "https://www.facebook.com/electronicmusiccouncil/", icon: "fab fa-facebook" },
+  { platform: "LinkedIn", url: "https://ie.linkedin.com/company/electronic-music-council", icon: "fab fa-linkedin" },
+  { platform: "TikTok", url: "https://www.tiktok.com/@electronicmusiccouncil", icon: "fab fa-tiktok" },
+  { platform: "YouTube", url: "https://www.youtube.com/@electronicmusiccouncil", icon: "fab fa-youtube" },
+  { platform: "SoundCloud", url: "https://soundcloud.com/electronicmusiccouncil", icon: "fab fa-soundcloud" }
 ];
 
 const Home: React.FC = () => {
@@ -97,33 +101,59 @@ const Home: React.FC = () => {
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
       </Head>
       
-      <ParticlesBackground />
+      {/* The particles background with z-index to appear behind content */}
+      <div className="fixed inset-0 z-particles">
+        <ParticlesBackground />
+      </div>
       
       <Header activeLink="home" />
       
       {/* Hero Section */}
-      <section className="hero">
-        <div className="hero-content">
-          <h1 className="glitch-text" data-text="Electronic Music Council">Electronic Music Council</h1>
-          <div className="tagline">Fostering Cork&apos;s electronic music culture</div>
-          <div className="hero-buttons">
-            <Link href="/events" className="btn btn-primary">Upcoming Events</Link>
-            <Link href="/about" className="btn btn-secondary">Our Mission</Link>
+      <section className="hero relative z-content">
+        <div className="hero-content relative">
+          <h1 
+            className="glitch-text text-text-light text-shadow-lg" 
+            data-text="Electronic Music Council"
+          >
+            Electronic Music Council
+          </h1>
+          <div className="tagline text-text-muted text-shadow-md">
+            Fostering Cork&apos;s electronic music culture
+          </div>
+          <div className="hero-buttons flex gap-4 mt-8 justify-center">
+            <Link href="/events" className="btn btn-primary hover:bg-primary-hover transition-colors duration-300">
+              Upcoming Events
+            </Link>
+            <Link href="/about" className="btn btn-secondary hover:bg-secondary/80 transition-colors duration-300">
+              Our Mission
+            </Link>
           </div>
           
           {/* Social Links */}
-          <div className="social-links">
-            {socialLinks.map((link, index) => (
-              <a 
-                href={link.url} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                key={index}
-                aria-label={`Follow us on ${link.platform}`}
-              >
-                <i className={link.icon}></i>
-              </a>
-            ))}
+          <div className="social-links-horizontal mt-8">
+            <div className="social-links-container justify-center">
+              <h3 className="text-xl">Follow Us</h3>
+              <div className="social-icons-row">
+                <a href="https://www.instagram.com/electronicmusiccouncil/" target="_blank" rel="noopener noreferrer" className="social-icon-btn" aria-label="Instagram">
+                  <FaInstagram size={22} />
+                </a>
+                <a href="https://www.facebook.com/electronicmusiccouncil/" target="_blank" rel="noopener noreferrer" className="social-icon-btn" aria-label="Facebook">
+                  <FaFacebookF size={22} />
+                </a>
+                <a href="https://ie.linkedin.com/company/electronic-music-council" target="_blank" rel="noopener noreferrer" className="social-icon-btn" aria-label="LinkedIn">
+                  <FaLinkedinIn size={22} />
+                </a>
+                <a href="https://www.tiktok.com/@electronicmusiccouncil" target="_blank" rel="noopener noreferrer" className="social-icon-btn" aria-label="TikTok">
+                  <FaTiktok size={22} />
+                </a>
+                <a href="https://www.youtube.com/@electronicmusiccouncil" target="_blank" rel="noopener noreferrer" className="social-icon-btn" aria-label="YouTube">
+                  <FaYoutube size={22} />
+                </a>
+                <a href="https://soundcloud.com/electronicmusiccouncil" target="_blank" rel="noopener noreferrer" className="social-icon-btn" aria-label="SoundCloud">
+                  <FaSoundcloud size={22} />
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </section>
