@@ -8,13 +8,8 @@ const nextConfig = {
   images: {
     // This ensures all images are properly optimized
     domains: [],
-    // This allows the Next.js Image component to handle any external source paths
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "**",
-      },
-    ],
+    // Configure unoptimized images for simplicity and to ensure they work on Vercel
+    unoptimized: true,
   },
 }
 

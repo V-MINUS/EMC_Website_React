@@ -12,14 +12,14 @@ const TeamCard: React.FC<TeamCardProps> = ({ name, role, bio, imageSrc }) => {
   return (
     <div className="team-card">
       <div className="team-card-image">
-        <div className="image-container">
-          <img 
-            src={imageSrc || '/images/team-placeholder.jpg'} 
+        <div style={{ width: '240px', height: '240px', position: 'relative', margin: '0 auto', overflow: 'hidden', borderRadius: '8px' }}>
+          <Image 
+            src={imageSrc || '/images/team-placeholder.jpg'}
             alt={name}
-            className="team-image"
-            onError={(e) => {
-              e.currentTarget.src = '/images/team-placeholder.jpg';
-            }}
+            width={240}
+            height={240}
+            style={{ objectFit: 'cover' }}
+            unoptimized
           />
         </div>
       </div>
