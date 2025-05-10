@@ -12,7 +12,7 @@ const TeamCard: React.FC<TeamCardProps> = ({ name, role, bio, imageSrc }) => {
   return (
     <div className="team-card">
       <div className="team-card-image flex justify-center">
-        <div className="relative w-60 h-60 overflow-hidden rounded-lg">
+        <div className="relative w-full max-w-[240px] h-[240px] overflow-hidden rounded-lg">
           <img 
             src={imageSrc || '/images/team-placeholder.jpg'} 
             alt={name}

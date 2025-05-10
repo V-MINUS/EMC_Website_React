@@ -123,7 +123,7 @@ const Merch = () => {
             {filteredProducts.map(product => (
               <div className="team-card product-card" key={product.id}>
                 <div className="team-card-image product-image flex justify-center">
-                  <div className="relative w-60 h-60 overflow-hidden rounded-lg">
+                  <div className="relative w-full max-w-[240px] h-[240px] overflow-hidden rounded-lg">
                     <img 
                       src={product.image} 
                       alt={product.name} 

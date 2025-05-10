@@ -716,10 +716,11 @@ button[type="submit"]:disabled,
   line-height: 1.6;
 }
 
-.team-grid {
+.team-grid, .products-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 2rem;
+  width: 100%;
 }
 
 /* Responsive design */
