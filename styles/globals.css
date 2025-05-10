@@ -689,19 +689,23 @@ button[type="submit"]:disabled,
   justify-content: center;
 }
 
-.image-container {
+/* Fixed image container styles */
+.fixed-image-container {
   width: 240px;
   height: 240px;
   border-radius: 8px;
   overflow: hidden;
   position: relative;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
-.team-image {
+.fixed-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
+  display: block;
   transition: all 0.5s ease;
 }
 

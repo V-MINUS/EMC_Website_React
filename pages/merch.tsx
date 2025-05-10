@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
-import Image from 'next/image';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import ParticlesBackground from '../components/ParticlesBackground';
@@ -124,14 +123,15 @@ const Merch = () => {
             {filteredProducts.map(product => (
               <div className="team-card product-card" key={product.id}>
                 <div className="team-card-image product-image">
-                  <div style={{ width: '240px', height: '240px', position: 'relative', margin: '0 auto', overflow: 'hidden', borderRadius: '8px' }}>
-                    <Image 
+                  <div className="fixed-image-container">
+                    <img 
                       src={product.image || '/images/event-placeholder.jpg'} 
                       alt={product.name}
-                      width={240}
-                      height={240}
-                      style={{ objectFit: 'cover' }}
-                      unoptimized
+                      className="fixed-image"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.src = '/images/event-placeholder.jpg';
+                      }}
                     />
                   </div>
                 </div>
